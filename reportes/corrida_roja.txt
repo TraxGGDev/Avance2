@@ -1,0 +1,323 @@
+Etapa: secretos en el codigo (detect-secrets)
+Umbral que bloquea: 1 o mas secretos detectados
+Secretos encontrados: 1
+  [HALLAZGO] app\api\main.py:19 tipo=Secret Keyword
+  No se pudo auditar app\api\requirements.txt:
+WARNING:venv:Actual environment location may have moved due to redirects, links or junctions.
+  Requested location: "C:\Users\TRAXGG~1\AppData\Local\Temp\tmp4gszbizt\Scripts\python.exe"
+  Actual location:    "C:\Users\Trax GG\AppData\Local\Temp\tmp4gszbizt\Scripts\python.exe"
+ERROR:pip_audit._virtual_env:internal pip failure: WARNING: Cache entry deserialization failed, entry ignored
+
+WARNING: Cache entry deserialization failed, entry ignored
+
+  error: subprocess-exited-with-error
+
+  
+
+  Getting requirements to build wheel did not run successfully.
+
+  exit code: 1
+
+  
+
+  [34 lines of output]
+
+  C:\Users\Trax GG\AppData\Local\Temp\pip-build-env-eohjyb28\overlay\Lib\site-packages\setuptools\dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+
+  !!
+
+  
+
+          ********************************************************************************
+
+          Please consider removing the following classifiers in favor of a SPDX license expression:
+
+  
+
+          License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)
+
+  
+
+          See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+
+          ********************************************************************************
+
+  
+
+  !!
+
+    self._finalize_license_expression()
+
+  running egg_info
+
+  writing psycopg2_binary.egg-info\PKG-INFO
+
+  writing dependency_links to psycopg2_binary.egg-info\dependency_links.txt
+
+  writing top-level names to psycopg2_binary.egg-info\top_level.txt
+
+  
+
+  Error: pg_config executable not found.
+
+  
+
+  pg_config is required to build psycopg2 from source.  Please add the directory
+
+  containing pg_config to the $PATH or specify the full executable path with the
+
+  option:
+
+  
+
+      python setup.py build_ext --pg-config /path/to/pg_config build ...
+
+  
+
+  or with the pg_config option in 'setup.cfg'.
+
+  
+
+  If you prefer to avoid building psycopg2 from source, please install the PyPI
+
+  'psycopg2-binary' package instead.
+
+  
+
+  For further information please check the 'doc/src/install.rst' file (also at
+
+  <https://www.psycopg.org/docs/install.html>).
+
+  
+
+  [end of output]
+
+  
+
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+
+ERROR: Failed to build 'psycopg2-binary' when getting requirements to build wheel
+
+
+ERROR:pip_audit._cli:Failed to install packages: ['C:\\Users\\TRAXGG~1\\AppData\\Local\\Temp\\tmp4gszbizt\\Scripts\\python.exe', '-m', 'pip', 'install', '--no-input', '--keyring-provider=subprocess', '--dry-run', '--report', 'C:\\Users\\TRAXGG~1\\AppData\\Local\\Temp\\tmpe_h9w8w2\\tmp_kpi_373', '-r', 'C:\\Users\\Trax GG\\Downloads\\Avance 2\\plantilla_repositorio_avance2\\app\\api\\requirements.txt']
+
+  No se pudo auditar app\worker\requirements.txt:
+WARNING:venv:Actual environment location may have moved due to redirects, links or junctions.
+  Requested location: "C:\Users\TRAXGG~1\AppData\Local\Temp\tmphu4qs65k\Scripts\python.exe"
+  Actual location:    "C:\Users\Trax GG\AppData\Local\Temp\tmphu4qs65k\Scripts\python.exe"
+ERROR:pip_audit._virtual_env:internal pip failure: WARNING: Cache entry deserialization failed, entry ignored
+
+WARNING: Cache entry deserialization failed, entry ignored
+
+  error: subprocess-exited-with-error
+
+  
+
+  Getting requirements to build wheel did not run successfully.
+
+  exit code: 1
+
+  
+
+  [34 lines of output]
+
+  C:\Users\Trax GG\AppData\Local\Temp\pip-build-env-c6tj53cb\overlay\Lib\site-packages\setuptools\dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+
+  !!
+
+  
+
+          ********************************************************************************
+
+          Please consider removing the following classifiers in favor of a SPDX license expression:
+
+  
+
+          License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)
+
+  
+
+          See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+
+          ********************************************************************************
+
+  
+
+  !!
+
+    self._finalize_license_expression()
+
+  running egg_info
+
+  writing psycopg2_binary.egg-info\PKG-INFO
+
+  writing dependency_links to psycopg2_binary.egg-info\dependency_links.txt
+
+  writing top-level names to psycopg2_binary.egg-info\top_level.txt
+
+  
+
+  Error: pg_config executable not found.
+
+  
+
+  pg_config is required to build psycopg2 from source.  Please add the directory
+
+  containing pg_config to the $PATH or specify the full executable path with the
+
+  option:
+
+  
+
+      python setup.py build_ext --pg-config /path/to/pg_config build ...
+
+  
+
+  or with the pg_config option in 'setup.cfg'.
+
+  
+
+  If you prefer to avoid building psycopg2 from source, please install the PyPI
+
+  'psycopg2-binary' package instead.
+
+  
+
+  For further information please check the 'doc/src/install.rst' file (also at
+
+  <https://www.psycopg.org/docs/install.html>).
+
+  
+
+  [end of output]
+
+  
+
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+
+ERROR: Failed to build 'psycopg2-binary' when getting requirements to build wheel
+
+
+ERROR:pip_audit._cli:Failed to install packages: ['C:\\Users\\TRAXGG~1\\AppData\\Local\\Temp\\tmphu4qs65k\\Scripts\\python.exe', '-m', 'pip', 'install', '--no-input', '--keyring-provider=subprocess', '--dry-run', '--report', 'C:\\Users\\TRAXGG~1\\AppData\\Local\\Temp\\tmpng2ua3be\\tmpt7hrzw8u', '-r', 'C:\\Users\\Trax GG\\Downloads\\Avance 2\\plantilla_repositorio_avance2\\app\\worker\\requirements.txt']
+
+Etapa: dependencias vulnerables (pip-audit)
+Umbral que bloquea: 1 o mas vulnerabilidades conocidas
+Vulnerabilidades encontradas: 0
+Etapa: analisis estatico del codigo (bandit)
+Umbral que bloquea: 1 o mas hallazgos HIGH con confianza MEDIUM o superior
+Hallazgos: 0
+  [OK] IAC001 (CRITICAL): El bucket de S3 tiene bloqueado el acceso publico (block_public_acls, block_public_policy, ignore_public_acls, restrict_public_buckets = true)
+  [OK] IAC002 (CRITICAL): El bucket de S3 tiene configurado cifrado por defecto (server side encryption)
+  [OK] IAC003 (CRITICAL): La instancia RDS tiene storage_encrypted = true
+  [OK] IAC004 (CRITICAL): La instancia RDS tiene publicly_accessible = false
+  [OK] IAC005 (CRITICAL): Ningun bloque de entrada (ingress) del security group de RDS permite 0.0.0.0/0 en el puerto de la base de datos
+  [OK] IAC006 (CRITICAL): La contrasena de la base de datos no esta escrita como texto literal en el .tf (debe venir de var.db_password)
+{
+  "etapa": "infraestructura_como_codigo",
+  "total_checks": 6,
+  "checks": [
+    {
+      "id": "IAC001",
+      "descripcion": "El bucket de S3 tiene bloqueado el acceso publico (block_public_acls, block_public_policy, ignore_public_acls, restrict_public_buckets = true)",
+      "severidad": "CRITICAL",
+      "paso": true
+    },
+    {
+      "id": "IAC002",
+      "descripcion": "El bucket de S3 tiene configurado cifrado por defecto (server side encryption)",
+      "severidad": "CRITICAL",
+      "paso": true
+    },
+    {
+      "id": "IAC003",
+      "descripcion": "La instancia RDS tiene storage_encrypted = true",
+      "severidad": "CRITICAL",
+      "paso": true
+    },
+    {
+      "id": "IAC004",
+      "descripcion": "La instancia RDS tiene publicly_accessible = false",
+      "severidad": "CRITICAL",
+      "paso": true
+    },
+    {
+      "id": "IAC005",
+      "descripcion": "Ningun bloque de entrada (ingress) del security group de RDS permite 0.0.0.0/0 en el puerto de la base de datos",
+      "severidad": "CRITICAL",
+      "paso": true
+    },
+    {
+      "id": "IAC006",
+      "descripcion": "La contrasena de la base de datos no esta escrita como texto literal en el .tf (debe venir de var.db_password)",
+      "severidad": "CRITICAL",
+      "paso": true
+    }
+  ],
+  "fallidos_criticos": 0
+}
+  [OK] app\api\Dockerfile: imagen=python:3.12.7-slim-bookworm version_fija=True no_root=True healthcheck=True
+  [OK] app\worker\Dockerfile: imagen=python:3.12.7-slim-bookworm version_fija=True no_root=True healthcheck=True
+{
+  "etapa": "dockerfiles_endurecidos",
+  "resultados": [
+    {
+      "archivo": "app\\api\\Dockerfile",
+      "imagen_base": "python:3.12.7-slim-bookworm",
+      "imagen_base_version_fija": true,
+      "usuario_no_root": true,
+      "tiene_healthcheck": true
+    },
+    {
+      "archivo": "app\\worker\\Dockerfile",
+      "imagen_base": "python:3.12.7-slim-bookworm",
+      "imagen_base_version_fija": true,
+      "usuario_no_root": true,
+      "tiene_healthcheck": true
+    }
+  ],
+  "fallidos": 0
+}
+
+======================================================================
+ ETAPA: Secretos en el codigo
+======================================================================
+--> Resultado de 'Secretos en el codigo': BLOQUEA
+
+======================================================================
+ ETAPA: Dependencias vulnerables
+======================================================================
+--> Resultado de 'Dependencias vulnerables': PERMITE
+
+======================================================================
+ ETAPA: Analisis estatico (SAST)
+======================================================================
+--> Resultado de 'Analisis estatico (SAST)': PERMITE
+
+======================================================================
+ ETAPA: Infraestructura como codigo
+======================================================================
+--> Resultado de 'Infraestructura como codigo': PERMITE
+
+======================================================================
+ ETAPA: Dockerfiles endurecidos
+======================================================================
+--> Resultado de 'Dockerfiles endurecidos': PERMITE
+
+======================================================================
+ SBOM (CycloneDX) -- no bloquea, es un artefacto obligatorio
+======================================================================
+SBOM generado en reportes\sbom_cyclonedx.json
+
+======================================================================
+ RESUMEN DE ETAPAS
+======================================================================
+  [BLOQUEA] Secretos en el codigo
+  [PERMITE] Dependencias vulnerables
+  [PERMITE] Analisis estatico (SAST)
+  [PERMITE] Infraestructura como codigo
+  [PERMITE] Dockerfiles endurecidos
+
+======================================================================
+ VEREDICTO FINAL: BLOQUEADO
+ Etapas que bloquearon: Secretos en el codigo
+======================================================================

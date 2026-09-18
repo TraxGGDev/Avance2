@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Clips Cortos</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+  fieldset { margin-bottom: 1.5rem; }
+  input { display: block; margin: 0.5rem 0; padding: 0.4rem; width: 100%; box-sizing: border-box; }
+  button { padding: 0.5rem 1rem; cursor: pointer; }
+  .video { border: 1px solid #ccc; padding: 0.75rem; margin: 0.5rem 0; border-radius: 6px; }
+  .estado { font-weight: bold; }
+  .estado.listo { color: green; }
+  .estado.error { color: crimson; }
+  .estado.pendiente, .estado.procesando { color: darkorange; }
+  img { max-width: 200px; display: block; margin-top: 0.5rem; }
+  #mensaje { color: crimson; }
+</style>
+</head>
+<body>
+  <h1>Clips Cortos</h1>
+  <p id="mensaje"></p>
+
+  <fieldset id="panel-auth">
+    <legend>Cuenta</legend>
+    <input id="username" placeholder="usuario" />
+    <input id="password" type="password" placeholder="contrasena" />
+    <button onclick="registro()">Registrarme</button>
+    <button onclick="login()">Iniciar sesion</button>
+  </fieldset>
+
+  <fieldset id="panel-app" style="display:none">
+    <legend>Sesion iniciada como <span id="usuario-actual"></span></legend>
+    <input id="archivo" type="file" accept="video/*" />
+    <button onclick="subir()">Subir video</button>
+    <button onclick="cerrarSesion()">Cerrar sesion</button>
+    <h2>Mis videos</h2>
+    <div id="lista"></div>
+  </fieldset>
+
+<script>
+let token = localStorage.getItem("token");
+let intervalo = null;
+
+function mostrarMensaje(msg) {
+  document.getElementById("mensaje").textContent = msg || "";
+}
+
+async function registro() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const r = await fetch("/auth/registro", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({username, password})
+  });
+  const d = await r.json();
+  mostrarMensaje(r.ok ? "Registrado, ya puedes iniciar sesion." : d.detail);
+}
+
+async function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const r = await fetch("/auth/login", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({username, password})
+  });
+  const d = await r.json();
+  if (!r.ok) { mostrarMensaje(d.detail); return; }
+  token = d.token;
+  localStorage.setItem("token", token);
+  document.getElementById("usuario-actual").textContent = username;
+  mostrarUI();
+}
+
+function cerrarSesion() {
+  token = null;
+  localStorage.removeItem("token");
+  clearInterval(intervalo);
+  document.getElementById("panel-app").style.display = "none";
+  document.getElementById("panel-auth").style.display = "block";
+}
+
+function mostrarUI() {
+  document.getElementById("panel-auth").style.display = "none";
+  document.getElementById("panel-app").style.display = "block";
+  cargarVideos();
+  intervalo = setInterval(cargarVideos, 4000);
+}
+
+async function subir() {
+  const archivo = document.getElementById("archivo").files[0];
+  if (!archivo) { mostrarMensaje("Elige un archivo primero"); return; }
+  const form = new FormData();
+  form.append("archivo", archivo);
+  const r = await fetch("/videos", {
+    method: "POST", headers: {"Authorization": "Bearer " + token}, body: form
+  });
+  const d = await r.json();
+  mostrarMensaje(r.ok ? "Video subido, procesando..." : d.detail);
+  if (r.ok) cargarVideos();
+}
+
+async function cargarVideos() {
+  const r = await fetch("/videos", { headers: {"Authorization": "Bearer " + token} });
+  if (!r.ok) return;
+  const videos = await r.json();
+  const cont = document.getElementById("lista");
+  cont.innerHTML = "";
+  for (const v of videos) {
+    const div = document.createElement("div");
+    div.className = "video";
+    div.innerHTML = `
+      <div>${v.nombre_original}</div>
+      <div class="estado ${v.estado}">${v.estado}</div>
+      ${v.duracion_segundos ? `<div>Duracion: ${v.duracion_segundos.toFixed(1)}s</div>` : ""}
+      ${v.mensaje_error ? `<div>Error: ${v.mensaje_error}</div>` : ""}
+      ${v.miniatura_url ? `<img src="${v.miniatura_url}" />` : ""}
+    `;
+    cont.appendChild(div);
+  }
+}
+
+if (token) mostrarUI();
+</script>
+</body>
+</html>

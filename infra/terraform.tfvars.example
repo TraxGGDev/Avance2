@@ -1,0 +1,9 @@
+# Copia este archivo como terraform.tfvars y llena tus valores REALES.
+# terraform.tfvars esta en .gitignore: nunca debe llegar al repositorio.
+nombre_proyecto = "clipscortos"
+bucket_name     = "clipscortos-TUNOMBRE-avance2"
+db_username     = "clipsadmin"
+db_password     = "CAMBIA-ESTO-por-una-clave-larga"  # pragma: allowlist secret
+db_name         = "clips"
+mi_ip_cidr      = "0.0.0.0/32"
+aws_region      = "us-east-1"

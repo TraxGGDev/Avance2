@@ -1,0 +1,16 @@
+services:
+  api:
+    build: ./app/api
+    container_name: clips_api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  worker:
+    build: ./app/worker
+    container_name: clips_worker
+    env_file:
+      - .env
+    restart: unless-stopped

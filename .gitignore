@@ -1,0 +1,20 @@
+# Nunca subas credenciales ni entornos locales
+.env
+*.pem
+venv/
+__pycache__/
+*.pyc
+bin/
+
+# Terraform: estado y variables locales contienen datos sensibles
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/*.tfvars
+infra/.terraform.lock.hcl
+infra/*.tfplan
+
+# Configuracion local del asistente, no es parte de la entrega
+.claude/
+
+
