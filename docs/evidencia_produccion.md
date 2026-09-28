@@ -2,40 +2,47 @@
 
 Alumno: Oscar Perez Hernandez -- Matricula: AL07020145 -- Tema: 1, Clips cortos
 
-[COMPLETAR: llena esta plantilla despues de desplegar en la instancia de
-Produccion. Es la prueba de que el ciclo completo (QA bloquea -> se
-clasifica -> se remedia -> QA en verde -> se promueve) funciono de
-principio a fin, no solo en la maquina de QA.]
-
 ## Instancia de Produccion
 
-- IP publica / DNS: [COMPLETAR]
-- Fecha y hora de creacion: [COMPLETAR]
-- Commit desplegado (hash corto): `58f5c17` (Remedia inyeccion de comandos
-  en /videos/{id}/exportar -- CWE-78) o el que resulte tras el push final
-- Confirmacion de que es una instancia NUEVA, distinta de la de QA del
-  Avance 2: [COMPLETAR -- por ejemplo, ID de instancia EC2 diferente]
+- ID de instancia: `i-0a226c2547e0330cf` (distinta de `i-09c6520cc686811ec`,
+  la instancia de QA del Avance 2)
+- Nombre (tag): `clipscortos-prod`
+- IP publica: `3.89.254.59` -- DNS: `ec2-3-89-254-59.compute-1.amazonaws.com`
+- AMI: `ami-0cdb4c9b0d678e416` (Amazon Linux 2023), la misma que usa QA
+- Security group: `sg-0e151fffbd6c79e47` (`clipscortos-app-sg`, el mismo
+  que QA -- Produccion y QA comparten el bucket S3 y la RDS, solo cambia
+  la instancia donde corre el contenedor de la app)
+- Fecha y hora de creacion: 2026-09-28, ~03:20 UTC
+- Commit desplegado (hash corto): `c0879c5` -- ya incluye el parche del
+  Tema 1 remediado (CWE-78), la actualizacion de dependencias vulnerables
+  y las correcciones encontradas al probar el flujo end-to-end
 
 ## Pasos seguidos para desplegar
 
-1. Se creo la instancia EC2 de Produccion (security group `app` y subred
-   por defecto de `terraform output`, mismo bucket S3 y misma RDS que QA
-   -- Produccion y QA comparten datos/infraestructura, solo cambia donde
-   corre el contenedor de la app).
-2. Se clono el repositorio en la instancia de Produccion, en el commit
-   `58f5c17` (o posterior), que ya incluye la remediacion.
-3. Se copio el `.env` con las credenciales reales (nunca se sube al
-   repositorio).
-4. Se corrio `docker compose up --build -d`.
-5. Se verifico en el navegador, desde `http://<ip-produccion>:8000`, que
-   la aplicacion respondiera en `/salud` y que el flujo completo
-   (registro, login, subida de un video, exportar en baja resolucion)
-   funcionara con el codigo ya remediado.
+1. Se lanzo una instancia EC2 nueva (misma AMI, mismo rol de IAM
+   `LabInstanceProfile` y mismo security group que QA, para reusar el
+   acceso ya autorizado al bucket S3 y a la RDS).
+2. Se instalo Docker y Docker Compose (Amazon Linux 2023 no los trae por
+   defecto).
+3. Se clono el repositorio en la instancia de Produccion, en el commit
+   `c0879c5`, que ya incluye la remediacion completa.
+4. Se copio el `.env` real (nunca se sube al repositorio) con las mismas
+   credenciales de RDS y S3 que usa QA.
+5. Se corrio `docker-compose up --build -d`.
+6. Se verifico:
+   - `GET /salud` responde `{"status":"ok"}`.
+   - Flujo completo probado de extremo a extremo: registro, login,
+     subida de un video, y exportar en baja resolucion (`POST
+     /videos/{id}/exportar` con `resolucion=640x360`) -- respondio `200`
+     y el archivo exportado quedo en el bucket S3 real
+     (`exports/27/...mp4`).
+   - Un intento de inyeccion en el mismo endpoint (`resolucion="480x270;
+     touch /tmp/pwned_desde_api"`) fue rechazado con `400` por la lista
+     blanca, confirmando que la remediacion esta activa tambien en
+     Produccion.
 
 ## Nota sobre el credito del Learner Lab
 
-La instancia de Produccion se termino inmediatamente despues de tomar la
-captura de evidencia, para no consumir el doble de presupuesto de AWS
-Academy con dos instancias EC2 corriendo en paralelo.
-
-[COMPLETAR: agrega aqui la hora exacta en que terminaste la instancia.]
+[COMPLETAR: agrega aqui la hora exacta en que terminaste la instancia de
+Produccion, despues de tomar tus capturas. No la dejes corriendo mas
+tiempo del necesario -- ya quedo verificado que funciona.]

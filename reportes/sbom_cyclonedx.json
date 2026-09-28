@@ -2,7 +2,7 @@
   "components": [
     {
       "bom-ref": "requirements-L6",
-      "description": "requirements line 6: PyJWT==2.9.0",
+      "description": "requirements line 6: PyJWT==2.15.0",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -11,9 +11,9 @@
         }
       ],
       "name": "PyJWT",
-      "purl": "pkg:pypi/pyjwt@2.9.0",
+      "purl": "pkg:pypi/pyjwt@2.15.0",
       "type": "library",
-      "version": "2.9.0"
+      "version": "2.15.0"
     },
     {
       "bom-ref": "requirements-L5",
@@ -62,7 +62,7 @@
     },
     {
       "bom-ref": "requirements-L1",
-      "description": "requirements line 1: fastapi==0.115.0",
+      "description": "requirements line 1: fastapi==0.141.1",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -71,9 +71,9 @@
         }
       ],
       "name": "fastapi",
-      "purl": "pkg:pypi/fastapi@0.115.0",
+      "purl": "pkg:pypi/fastapi@0.141.1",
       "type": "library",
-      "version": "0.115.0"
+      "version": "0.141.1"
     },
     {
       "bom-ref": "requirements-L10",
@@ -107,7 +107,7 @@
     },
     {
       "bom-ref": "requirements-L7",
-      "description": "requirements line 7: python-multipart==0.0.9",
+      "description": "requirements line 7: python-multipart==0.0.32",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -116,13 +116,13 @@
         }
       ],
       "name": "python-multipart",
-      "purl": "pkg:pypi/python-multipart@0.0.9",
+      "purl": "pkg:pypi/python-multipart@0.0.32",
       "type": "library",
-      "version": "0.0.9"
+      "version": "0.0.32"
     },
     {
       "bom-ref": "requirements-L2",
-      "description": "requirements line 2: uvicorn[standard]==0.30.6",
+      "description": "requirements line 2: uvicorn[standard]==0.54.0",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -137,9 +137,9 @@
           "value": "standard"
         }
       ],
-      "purl": "pkg:pypi/uvicorn@0.30.6",
+      "purl": "pkg:pypi/uvicorn@0.54.0",
       "type": "library",
-      "version": "0.30.6"
+      "version": "0.54.0"
     }
   ],
   "dependencies": [
@@ -172,7 +172,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2026-09-18T03:13:44.612081+00:00",
+    "timestamp": "2026-09-28T03:49:15.788275+00:00",
     "tools": {
       "components": [
         {
@@ -276,7 +276,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:7a766e7e-3641-457d-9f53-6586e1a13179",
+  "serialNumber": "urn:uuid:3acf6f89-9689-47e8-8046-91c105471805",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
