@@ -48,3 +48,21 @@ de texto arbitraria.
 [COMPLETAR: si tu, al revisar el proyecto, encontraste otro error o algo que
 la IA asumio mal sobre tu contexto (por ejemplo, un valor por defecto que no
 aplicaba a tu cuenta de AWS Academy), agregalo aqui tambien.]
+
+## Entrega Final -- De QA a Produccion (Tema 1)
+
+| Parte del proyecto | Herramienta de IA | Que le pedi | Que cambie yo despues |
+|---|---|---|---|
+| Correccion del bug de pip-audit senalado en la retroalimentacion del Avance 2 | Claude (Claude Code) | Corregir `pipeline/etapa_dependencias.py` para que un fallo de la herramienta (no solo un hallazgo de vulnerabilidad) bloquee la etapa | Revise el diff y confirme que la logica anterior en efecto ignoraba el fallo con un `continue` silencioso |
+| Integracion del parche entregado (exportar clip en baja resolucion) | Claude (Claude Code) | Adaptar el Blueprint de Flask entregado a un router de FastAPI, integrado con mi S3/RDS reales y con el mismo JWT que el resto de mi API, dejando la falla de seguridad intacta para que mi pipeline la detectara | [COMPLETAR: confirma que corriste el pipeline en tu instancia de QA y viste tu con tus propios ojos el bloqueo, antes de dar por buena la integracion] |
+| Clasificacion del hallazgo y respuesta al incidente | Claude (Claude Code) | Redactar `docs/clasificacion_hallazgo.md` y `docs/respuesta_incidente.md` a partir del hallazgo real que marco bandit (B602, shell=True) en mi codigo | [COMPLETAR: revisa que la severidad y la justificacion describan tu implementacion real, no una generica] |
+| Remediacion del codigo (CWE-78) | Claude (Claude Code) | Reemplazar `subprocess.call(..., shell=True)` por `subprocess.run()` con lista de argumentos y una lista blanca de resoluciones | Volvi a correr bandit yo mismo y confirme 0 hallazgos antes de aceptar el fix |
+
+## Que hice sin IA (Entrega Final)
+
+[COMPLETAR: aplique el parche en mi instancia de QA existente del Avance 2,
+corri mi propio pipeline y vi el bloqueo real, corri el pipeline de nuevo
+tras la remediacion y vi el veredicto en verde, cree la instancia nueva de
+Produccion, desplegue ahi el codigo ya remediado y verifique en el
+navegador que la aplicacion corriera correctamente, y tome las capturas de
+pantalla de ambas instancias EC2 y del pipeline en rojo y en verde.]
