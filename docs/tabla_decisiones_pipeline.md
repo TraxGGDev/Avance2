@@ -23,6 +23,20 @@ pusiste, sino que puedas justificar cada uno.
 | Infraestructura como codigo | Verificador propio (`verificar_iac.py`) | `infra/*.tf`: bucket S3 privado y cifrado, RDS sin acceso publico y cifrada, sin contrasenas literales | 1 o mas de las 6 reglas CRITICAL fallidas | Las 6 reglas verifican exactamente los requisitos minimos obligatorios del reto para S3 y RDS; ninguna de ellas es negociable |
 | Dockerfiles endurecidos | Verificador propio (`verificar_dockerfiles.py`) | Cada `app/*/Dockerfile`: imagen base con version fija, `USER` distinto de root, `HEALTHCHECK` presente | 1 o mas Dockerfiles incumpliendo cualquiera de las 3 condiciones | Son exactamente las 3 condiciones que el requisito minimo pide para "Dockerfile endurecido"; no tiene sentido un umbral parcial |
 
+Nota sobre correccion post-Avance 2: la etapa de dependencias tenia un bug
+donde, si `pip-audit` fallaba al ejecutarse sobre un `requirements.txt`
+(por ejemplo porque no pudo instalar/resolver alguna dependencia), el script
+capturaba el `JSONDecodeError`, imprimia el error por stderr y hacia
+`continue` sin marcar la etapa como fallida -- el resultado era "0
+vulnerabilidades encontradas" con salida exitosa, aunque la herramienta
+jamas llego a analizar nada. Se corrigio en `pipeline/etapa_dependencias.py`:
+ahora un fallo de la herramienta se guarda en una bandera separada
+(`fallo_la_herramienta`) y la etapa bloquea (`sys.exit(1)`) si esa bandera
+quedo en `True`, sin importar cuantas vulnerabilidades reales se hayan
+contado. La regla general que queda para cualquier etapa de este pipeline:
+una herramienta que no corrio no es evidencia de "todo bien", es un fallo
+que debe bloquear.
+
 Nota sobre la eleccion de herramientas: para infraestructura evalue usar
 `checkov`, pero su dependencia nativa `lxml` no compila en este equipo con
 Python 3.14 (falta Microsoft C++ Build Tools, y no hay wheel precompilado

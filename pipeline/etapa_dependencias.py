@@ -25,8 +25,11 @@ ARCHIVOS_REQUIREMENTS = [
 
 def main():
     total_vulnerabilidades = 0
+    fallo_la_herramienta = False
     print("Etapa: dependencias vulnerables (pip-audit)")
     print("Umbral que bloquea: 1 o mas vulnerabilidades conocidas")
+    print("Si pip-audit no logra correr sobre algun archivo, esta etapa bloquea: "
+          "una herramienta que no corrio no es evidencia de 'cero vulnerabilidades'.")
 
     for archivo in ARCHIVOS_REQUIREMENTS:
         proceso = subprocess.run(
@@ -36,7 +39,9 @@ def main():
         try:
             datos = json.loads(proceso.stdout)
         except json.JSONDecodeError:
-            print(f"  No se pudo auditar {archivo.relative_to(RAIZ)}:", file=sys.stderr)
+            fallo_la_herramienta = True
+            print(f"  [FALLO DE HERRAMIENTA] No se pudo auditar {archivo.relative_to(RAIZ)} "
+                  f"(codigo de salida {proceso.returncode}):", file=sys.stderr)
             print(proceso.stderr, file=sys.stderr)
             continue
 
@@ -55,6 +60,10 @@ def main():
                     )
 
     print(f"Vulnerabilidades encontradas: {total_vulnerabilidades}")
+    if fallo_la_herramienta:
+        print("Veredicto de la etapa: BLOQUEA (pip-audit fallo al ejecutarse "
+              "sobre al menos un archivo, ver detalle arriba)", file=sys.stderr)
+        sys.exit(1)
     sys.exit(1 if total_vulnerabilidades > 0 else 0)
 
 
