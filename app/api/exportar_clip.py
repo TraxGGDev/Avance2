@@ -1,0 +1,60 @@
+"""
+PARCHE - Nueva funcionalidad: exportar clip en resolucion reducida
+Tema: Clips cortos
+
+Producto pide: el usuario puede pedir una version en baja resolucion de su
+clip ya subido, para compartirla mas rapido en redes con poco ancho de banda.
+
+Adaptado del Blueprint de Flask entregado (exportar_clip.py) a un router de
+FastAPI, integrado con el almacenamiento real de esta app (S3, no disco
+local) y protegido con el mismo login (JWT) que ya usa el resto de la API.
+La logica de construccion del comando de ffmpeg se dejo tal como se
+entrego, a proposito, para que el pipeline la detenga antes de remediarla.
+"""
+import os
+import subprocess
+import tempfile
+import uuid
+
+from fastapi import APIRouter, Depends, HTTPException
+
+from db import get_conn
+from recursos import S3_BUCKET, s3, usuario_actual
+
+router = APIRouter()
+
+
+@router.post("/videos/{video_id}/exportar")
+def exportar_video_baja_resolucion(video_id: int, datos: dict, usuario=Depends(usuario_actual)):
+    """Genera una copia en baja resolucion del clip usando ffmpeg."""
+    resolucion = datos.get("resolucion", "480x270")
+
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT s3_key_original FROM videos WHERE id = %s AND usuario_id = %s",
+        (video_id, usuario["sub"]),
+    )
+    fila = cur.fetchone()
+    cur.close()
+    conn.close()
+
+    if not fila:
+        raise HTTPException(status_code=404, detail="clip no encontrado")
+    clave_original = fila[0]
+
+    with tempfile.TemporaryDirectory() as tmp:
+        origen = os.path.join(tmp, "original")
+        s3.download_file(S3_BUCKET, clave_original, origen)
+        destino = os.path.join(tmp, f"exportado_{resolucion}.mp4")
+
+        comando = f"ffmpeg -y -i {origen} -vf scale={resolucion} {destino}"
+        subprocess.call(comando, shell=True)
+
+        clave_exportada = f"exports/{video_id}/{uuid.uuid4()}.mp4"
+        s3.upload_file(
+            destino, S3_BUCKET, clave_exportada,
+            ExtraArgs={"ServerSideEncryption": "AES256"},
+        )
+
+    return {"s3_key_exportado": clave_exportada}

@@ -3,23 +3,19 @@ import uuid
 from datetime import datetime, timedelta, timezone
 
 import bcrypt
-import boto3
-import jwt
 import psycopg2
-from fastapi import Depends, FastAPI, File, Header, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import HTMLResponse
 
 from db import get_conn, init_db
-
-AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
-S3_BUCKET = os.environ["S3_BUCKET"]
-JWT_SECRET = os.environ["JWT_SECRET"]
+from exportar_clip import router as exportar_router
+from recursos import JWT_SECRET, S3_BUCKET, s3, usuario_actual
 
 EXTENSIONES_PERMITIDAS = {".mp4", ".mov", ".webm", ".avi", ".mkv"}
 TAMANO_MAXIMO_BYTES = 200 * 1024 * 1024  # 200 MB
 
 app = FastAPI(title="Clips Cortos")
-s3 = boto3.client("s3", region_name=AWS_REGION)
+app.include_router(exportar_router)
 
 
 @app.on_event("startup")
@@ -30,17 +26,6 @@ def al_iniciar():
 @app.get("/salud")
 def salud():
     return {"status": "ok"}
-
-
-def usuario_actual(authorization: str = Header(None)):
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Falta el token de autorizacion")
-    token = authorization.split(" ", 1)[1]
-    try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-    except jwt.PyJWTError:
-        raise HTTPException(status_code=401, detail="Token invalido o expirado")
-    return payload
 
 
 @app.post("/auth/registro")
