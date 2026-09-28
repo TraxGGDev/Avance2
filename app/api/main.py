@@ -71,7 +71,7 @@ def login(datos: dict):
         raise HTTPException(status_code=401, detail="Usuario o contrasena invalidos")
     expiracion = datetime.now(timezone.utc) + timedelta(hours=8)
     token = jwt.encode(
-        {"sub": fila[0], "username": username, "exp": expiracion}, JWT_SECRET, algorithm="HS256"
+        {"sub": str(fila[0]), "username": username, "exp": expiracion}, JWT_SECRET, algorithm="HS256"
     )
     return {"token": token}
 
@@ -93,7 +93,7 @@ async def subir_video(archivo: UploadFile = File(...), usuario=Depends(usuario_a
     cur.execute(
         """INSERT INTO videos (usuario_id, nombre_original, s3_key_original)
            VALUES (%s, %s, %s) RETURNING id""",
-        (usuario["sub"], archivo.filename, clave),
+        (int(usuario["sub"]), archivo.filename, clave),
     )
     video_id = cur.fetchone()[0]
     conn.commit()
@@ -110,7 +110,7 @@ def listar_videos(usuario=Depends(usuario_actual)):
         """SELECT id, nombre_original, estado, duracion_segundos, s3_key_miniatura,
                   mensaje_error, creado_en
            FROM videos WHERE usuario_id = %s ORDER BY creado_en DESC""",
-        (usuario["sub"],),
+        (int(usuario["sub"]),),
     )
     filas = cur.fetchall()
     cur.close()

@@ -48,7 +48,7 @@ def exportar_video_baja_resolucion(video_id: int, datos: dict, usuario=Depends(u
     cur = conn.cursor()
     cur.execute(
         "SELECT s3_key_original FROM videos WHERE id = %s AND usuario_id = %s",
-        (video_id, usuario["sub"]),
+        (video_id, int(usuario["sub"])),
     )
     fila = cur.fetchone()
     cur.close()
