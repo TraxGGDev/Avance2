@@ -43,6 +43,9 @@ Alumno: Oscar Perez Hernandez -- Matricula: AL07020145 -- Tema: 1, Clips cortos
 
 ## Nota sobre el credito del Learner Lab
 
-[COMPLETAR: agrega aqui la hora exacta en que terminaste la instancia de
-Produccion, despues de tomar tus capturas. No la dejes corriendo mas
-tiempo del necesario -- ya quedo verificado que funciona.]
+La instancia de Produccion (`i-0a226c2547e0330cf`) se termino el
+2026-09-29 a las 03:31 UTC, inmediatamente despues de tomar las capturas
+de evidencia (consola de AWS y la app corriendo en el navegador), para no
+seguir consumiendo credito del Learner Lab con dos instancias EC2
+corriendo en paralelo. La instancia de QA (`i-09c6520cc686811ec`) sigue
+activa, igual que en el Avance 2.
